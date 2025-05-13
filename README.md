@@ -1,216 +1,161 @@
-# Greenwood Library Website – Capstone Git Collaboration Project
+# Introduction to Linux – Capstone Project
 
-## 📘 Project Overview
+## Overview
 
-This capstone project simulates a collaborative software development scenario involving two contributors—**Morgan** and **Jamie**—working on enhancing the official website of the **Greenwood Community Library**. The goal is to practice professional Git workflows including branching, commits, pull requests, and merge operations.
+This project is designed to provide a foundational understanding of **Linux**, one of the most widely used operating systems in the tech industry. Mastering Linux is essential for careers in:
 
+- DevOps
+- Cloud Computing
+- Software Development
+- Cybersecurity
+- Data Analysis/Science
+- AI/ML Engineering
+- QA/Testing
 
-## 🧑‍💻 Contributors & Responsibilities
+Through this project, you will:
 
-| Contributor | Branch Name         | Contribution                          |
-|-------------|---------------------|----------------------------------------|
-| Morgan      | `add-book-reviews`  | Added a new `book_reviews.html` page   |
-| Jamie       | `update-events`     | Updated the `events.html` page         |
+- Understand what Linux is
+- Explore common Linux distributions
+- Create and access a cloud-based Linux server
+- Use `ssh` to connect to the server remotely
+- Perform basic software package management using `apt` or `yum`
 
+---
 
-## ✅ Step-by-Step Implementation Guide
+## What Is Linux?
 
-### 🔧 1. Project Setup
+**Linux** is a free, open-source operating system used for servers, supercomputers, mobile devices, and more. Unlike Windows or macOS, Linux is highly customizable and secure. It powers most of the internet's infrastructure and is supported by a global community of developers.
 
-#### ✅ Create GitHub Repository
-- Name: `greenwood-library-website`
-- Initialize with a `README.md`
+---
 
-#### ✅ Clone the Repository
+## Linux Distributions (Distros)
 
-```bash
-git clone https://github.com/<your-username>/greenwood-library-website.git
-cd greenwood-library-website
-code .
-```
+Linux distros are variations of the Linux OS built using the Linux kernel and bundled with system software and package managers. Here are some common ones:
 
+### Ubuntu
+- Best for beginners
+- Comes in desktop and server editions
+- Ideal for web hosting, development, and cloud deployment
 
-### 📝 2. Create Main Website Files (Simulate Existing Site)
+### CentOS
+- Enterprise-focused
+- Free version of Red Hat Enterprise Linux (RHEL)
+- Great for production server environments
 
-#### ✅ Create Base HTML Files
+### Debian
+- Focuses on free and open-source software
+- Very stable and supports multiple hardware architectures
 
-```bash
-touch home.html about_us.html events.html contact_us.html
-```
+### Fedora
+- Bleeding-edge distro with latest software
+- Often used as a testing ground for RHEL
 
-Add sample HTML content into each file:
+---
 
-**home.html**
+## Setting Up a Cloud-Based Linux Server
 
-```html
-<!DOCTYPE html>
-<html>
-<head><title>Home</title></head>
-<body><h1>Welcome to Greenwood Community Library</h1></body>
-</html>
-```
+We use **AWS (Amazon Web Services)** to create and manage a Linux server using EC2 (Elastic Compute Cloud).
 
-Repeat similar structure for:
+### Steps:
 
-* `about_us.html`
-* `events.html`
-* `contact_us.html`
+1. Sign up at [aws.amazon.com](https://aws.amazon.com)
+2. Go to the EC2 dashboard
+3. Click **Launch Instance**
+4. Select **Ubuntu Server 20.04 LTS (Free tier eligible)**
+5. Choose a **t2.micro** instance type
+6. Generate and download a **.pem** key file (e.g., `ubuntu.pem`)
+7. Launch the instance
 
-#### ✅ Stage, Commit, and Push
+*Screenshot: AWS EC2 instance launched*
+![AWS EC2 instance launched](./assets/instance_launch1.png)
+![AWS EC2 instance launched](./assets/instance_launch2.png)]
 
-```bash
-git add .
-git commit -m "Add base website files"
-git push origin main
-```
+---
 
-📸 *Screenshot:* `git status` and `git push` confirmation
-![Git Status & Git Push Confirmation](./assets/01_git _tatus_&_git_push_confirmation.png)
+## Connecting to Your Server (Using SSH)
 
+### Requirements
 
-## 👩‍💻 Morgan’s Work – Book Reviews Section
+#### Windows
+- Use **MobaXterm** or **Git Bash**
+- (Alternative: PuTTY, PowerShell)
 
-### 3. Create and Switch to Branch
+#### macOS
+- Use the built-in **Terminal**
 
-```bash
-git checkout -b add-book-reviews
-```
-📸 *Screenshot:* Branch creation and switch
-![Branch creation and switch](./assets/02_branch_creation_commit_push.png)
+### Steps
 
-
-
-### 4. Create Book Reviews File
-
-```bash
-touch book_reviews.html
-```
-
-**book\_reviews.html**
-
-```html
-<!DOCTYPE html>
-<html>
-<head><title>Book Reviews</title></head>
-<body>
-  <h2>Community Book Reviews</h2>
-  <p>Here's what our readers are saying!</p>
-</body>
-</html>
-```
-
-📸 *Screenshot:* Branch creation and switch
-![Branch creation and switch](./assets/03_branch_creation_pull_from main_push.png)
-
-
-### 5. Stage, Commit, and Push
+1. Open your terminal
+2. Navigate to the directory with your PEM key:
 
 ```bash
-git add book_reviews.html
-git commit -m "Add book reviews section"
-git push origin add-book-reviews
-```
+cd ~/Downloads
+````
 
-📸 *Screenshot:* Branch creation, commit, and push
-![Branch creation and switch](./assets/03_branch_creation_pull_from main_push.png)
-
-
-### 6. Create Pull Request
-
-* Go to: [GitHub Repo](https://github.com/<your-username>/greenwood-library-website)
-* Click **"Compare & pull request"** on `add-book-reviews`
-* Title: `Add Book Reviews Section`
-* Click **"Merge Pull Request"**
-
-📸 *Screenshot:* PR opened and merged
-![Pull requests and merges](./assets/add-book-reviews_pull_request.png)
-![Pull requests and merges](./assets/pull&merge1.png)
-![Pull requests and merges](./assets/pull&merge2.png)
-![Pull requests and merges](./assets/pull&merge3.png)
-![Pull requests and merges](./assets/pull&merge4.png)
-
-
-
-## 👨‍💻 Jamie’s Work – Events Page Update
-
-### 7. Create and Switch to New Branch
+3. Change permissions on the key:
 
 ```bash
-git checkout main
-git pull origin main
-git checkout -b update-events
+chmod 400 key.pem
 ```
 
-📸 *Screenshot:* Branch creation and switch
-![Branch creation and switch](./assets/03_branch_creation_pull_from main_push.png)
-
-### 8. Edit `events.html`
-
-Replace or append content with upcoming events:
-
-```html
-<h2>Upcoming Events</h2>
-<ul>
-  <li>Author Meet & Greet – May 20</li>
-  <li>Children’s Story Hour – May 25</li>
-</ul>
-```
-
-
-### 9. Stage, Commit, Pull & Push
+4. Extract the **public IP address** of your EC2 instance from the AWS dashboard
+5. Connect using SSH:
 
 ```bash
-git add events.html
-git commit -m "Update events page with upcoming events"
-git pull origin main
-# Resolve any conflicts if prompted
-git push origin update-events
+ssh -i ubuntu.pem ubuntu@<your-public-ip>
 ```
 
-📸 *Screenshot:* Pull from main, commit, and push confirmation
-![Branch creation and switch](./assets/03_branch_creation_pull_from main_push.png)
+*Screenshot: Successful SSH login with `welcome to Ubuntu` banner*
+![Connection to Virtual Machine Instance](./assets/virtual_machine_connection.png)
 
+---
 
-### 10. Create Pull Request for Jamie
+## Using Package Managers (apt/yum)
 
-* Go to: [GitHub Repo](https://github.com/<your-username>/greenwood-library-website)
-* Create PR for `update-events`
-* Title: `Update Events Page`
-* Merge into `main`
+Package managers help you install, update, and remove software on Linux.
 
-📸 *Screenshot:* Open PR and merge confirmation
+### 🧪 Examples:
 
-![Pull requests and merges](./assets/add-book-reviews_pull_request.png)
-![Pull requests and merges](./assets/Open_PR&merged_confirmation1.png)
-![Pull requests and merges](./assets/Open_PR&merged_confirmation2.png)
-![Pull requests and merges](./assets/Open_PR&merged_confirmation3.png)
-![Pull requests and merges](./assets/Open_PR&merged_confirmation4.png)
-
-
-
-## ✅ Final Project Confirmation
-
-After all merges, I ensured my local main branch reflects the updates:
+#### Ubuntu/Debian (APT):
 
 ```bash
-git checkout main
-git pull origin main
+sudo apt update               # Refresh package list
+sudo apt install nginx        # Install NGINX web server
+sudo apt remove nginx         # Remove NGINX
 ```
 
-Confirm all final files exist:
+#### CentOS/RHEL (YUM):
 
-* `home.html`
-* `about_us.html`
-* `events.html`
-* `contact_us.html`
-* `book_reviews.html`
+```bash
+sudo yum update
+sudo yum install httpd
+sudo yum remove httpd
+```
 
-📸 *Screenshot:* File list and `git log --oneline` showing all commits
+*Screenshot: Installing NGINX or Apache with `apt` or `yum`*
+![Updates and Installations](./assets/update&installation1.png)
+![Updates and Installations](./assets/update&installation2.png)
+![Updates and Installations](./assets/update&installation3.png)
+![Updates and Installations](./assets/update&installation4.png)
+![Updates and Installations](./assets/update&installation5.png)
+![Updates and Installations](./assets/update&installation6.png)
 
-![alt text](assets/04_file_list&git_log--oneline.png)
 
 
-## 🔗 Live Repository
+## Final Project Structure
 
-[https://github.com/onisj/greenwood-library-website](https://github.com/onisj/greenwood-library-website)
+```
+intro-to-linux-project/
+├── README.md
+├── screenshots/
+│   ├── aws-instance-setup.png
+│   ├── ssh-connection.png
+│   ├── apt-install-nginx.png
+```
+
+---
+
+## Conclusion
+
+This project covered the foundational elements of Linux, including understanding different distributions, setting up a cloud-based server, connecting securely via SSH, and managing packages using `apt` and `yum`. These concepts are vital stepping stones for any modern technology career.
 
