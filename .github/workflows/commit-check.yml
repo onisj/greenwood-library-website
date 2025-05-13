@@ -1,0 +1,23 @@
+name: Check Commit Messages
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+jobs:
+  commit-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for commit checks
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install commitlint
+        run: npm install --save-dev @commitlint/cli @commitlint/config-conventional
+      - name: Validate commit messages
+        run: |
+          echo "module.exports = { extends: ['@commitlint/config-conventional'], rules: { 'header-max-length': [2, 'always', 50], 'type-enum': [2, 'always', ['feat', 'fix', 'docs', 'test', 'chore', 'perf', 'ci', 'build', 'style', 'revert', 'ops', 'refactor']], 'scope-empty': [1, 'never'], 'ticket-id': [2, 'always'] }, plugins: [{ rules: { 'ticket-id': ({ header }) => { const ticketRegex = /\[[A-Z]+-[0-9]+\]/; return [ticketRegex.test(header), 'Commit message must include a ticket ID in format [PROJECT-123]']; } } }] };" > commitlint.config.js
+          npx commitlint --from=HEAD~${{ github.event.pull_request.commits || 1 }} --to=HEAD --verbose
