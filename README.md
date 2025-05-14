@@ -2,30 +2,30 @@
 
 ## Project Overview
 
-This project is focused on building a foundational understanding of Linux by practicing core shell commands used in real-world DevOps and system administration environments. The goal is to simulate everyday tasks that system administrators and DevOps engineers routinely perform, such as navigating directories, managing files, and locating system resources using native Linux command-line utilities.
+This project provides a practical, hands-on introduction to essential Linux commands used in system administration and DevOps environments. The focus is on navigating the Linux filesystem, managing files and directories, using secure remote access (SSH), and applying real-world operations on a cloud-based Linux server (EC2 on AWS). Additional advanced commands are included to enhance understanding and reflect common professional practices.
 
 ---
 
 ## Objectives
 
-The instructor outlined the following learning objectives for this project:
-
-- Demonstrate core Linux commands for navigation, file/directory creation, and manipulation
-- Execute and document practical command-line tasks
-- Apply Linux concepts to real-world use cases (e.g., working with cloud-based servers)
-- Show understanding through output and screenshots of commands
+- Demonstrate proficiency with core Linux commands (e.g., `pwd`, `ls`, `mkdir`, `rm`, `find`)
+- Use secure shell (SSH) to connect to a remote Ubuntu server
+- Perform file and directory creation, editing, deletion, and permission modification
+- Apply advanced commands (`chmod`, `grep`) to simulate real-world DevOps use cases
+- Document commands, outputs, and troubleshooting steps with screenshots
 
 ---
 
 ## Environment Setup
 
-- **Operating System**: Ubuntu 20.04 LTS (via EC2 on AWS)
-- **Access Method**: SSH from macOS terminal
+- **OS**: Ubuntu 20.04 LTS (AWS EC2)
+- **Access**: SSH via macOS Terminal
 - **Instance Type**: t2.micro (Free Tier)
+- **Key File**: `ubuntu.pem`
 
 ---
 
-## SSH Access to Cloud Server
+## Connecting to EC2 via SSH
 
 ```bash
 cd ~/Downloads
@@ -33,34 +33,36 @@ chmod 400 ubuntu.pem
 ssh -i ubuntu.pem ubuntu@<your-public-ip>
 ````
 
-Screenshot: Successful login to EC2 instance showing welcome message and hostname
-![Connection to Virtual Machine Instance](./assets/virtual_machine_connection.png)
-![Connection to Virtual Machine Instance](./assets/connection2.png)
+Screenshot:
+![Login confirmation](assets/virtual_machine_connection.png)
+![EC2 hostname and prompt](assets/connection2.png)
 
 ---
 
-## Filesystem Navigation & Management
+## Core Linux Commands & Tasks
 
-### 1. Print Current Directory
+### 1️. Print Current Directory
 
 ```bash
 pwd
 ```
 
-Screenshot: Output of `pwd` showing `/home/ubuntu`
-![Confirming current directory](./assets/pwd.png)
+Screenshot:
+
+![Current directory](assets/pwd.png)
 
 
 ---
 
-### 2. List Files and Directories
+### 2️. List Files and Hidden Files
 
 ```bash
 ls -la
 ```
 
-Screenshot: Output showing hidden files and details
-![Confirm List using -la flags](./assets/pwd_ls.png)
+Screenshot:
+
+![Files and hidden files](assets/pwd_ls.png)
 
 ---
 
@@ -71,24 +73,27 @@ mkdir devops-lab
 mv devops-lab linux-practice
 ```
 
-Screenshot: Confirmed creation and renaming using `ls`
-![Completing mkdir](assets/mkdir_devops-lab-to-linux-practice.png)
+Screenshot:
 
+![Creating and Renaming Directories](assets/mkdir_devops-lab-to-linux-practice.png)
 ---
 
-### 4. Create Files Inside Directories
+### 4️. Create and Write to Files
 
 ```bash
 cd linux-practice
 touch notes.txt summary.log
-echo "Linux is powerful." > notes.txt
+sudo bash -c 'echo "Linux is powerful." > notes.txt'
+cat notes.txt
 ```
 
-Screenshot: Created files and content preview using `cat`
-![preview with cat](assets/preview_with_cat.png)
+Screenshot:
+
+![Creating and Writing to Files](assets/preview_with_cat.png)
+
 ---
 
-### 🗑️ 5. Delete Files and Folders
+### 5️. Delete Files and Directories
 
 ```bash
 rm summary.log
@@ -96,76 +101,120 @@ cd ..
 rm -r linux-practice
 ```
 
-Screenshot: File and folder removal confirmation
-![Removal Evidences](assets/sudo_rms.png)
+Screenshot:
+
+![Deleting Files and Directories](assets/sudo_rms.png)
+
+
 ---
 
-### 🔍 6. Find Files and Directories
+### 6️. Find Files
 
 ```bash
 find /home/ubuntu -name "notes.txt"
 ```
 
-Screenshot: Output showing correct file path
-![Find notes.txt](assets/find_name.png)
+Screenshot:
+
+![Finding Files](assets/find_name.png)
+
 
 ---
 
-## Summary of Commands Demonstrated
+## Advanced Command Demonstration
 
-| Command  | Purpose                          |
-| -------- | -------------------------------- |
-| `pwd`    | Print current directory          |
-| `ls -la` | List all files, including hidden |
-| `mkdir`  | Create directories               |
-| `mv`     | Rename or move files/directories |
-| `touch`  | Create empty files               |
-| `echo`   | Write text to files              |
-| `cat`    | View contents of files           |
-| `rm`     | Delete files                     |
-| `rm -r`  | Delete directories recursively   |
-| `find`   | Search for files/directories     |
+### 7️. Modify File Permissions with `chmod`
+
+```bash
+sudo chmod 600 notes.txt
+ls -l notes.txt
+```
+
+Screenshot:
+
+![Modifying File Permissions](assets/chmod_notes.png)
+
 
 ---
+
+### 8️. Search File Content with `grep`
+
+```bash
+grep "powerful" notes.txt
+```
+
+Screenshot:
+
+![Searching File Content](assets/grep_notes.png)
+
+
+---
+
+### 9️. Error Handling Example
+
+```bash
+sudo echo "Hello" > restricted.txt
+```
+
+Result: `Permission denied`
+Fix:
+
+```bash
+sudo bash -c 'echo "Hello" > restricted.txt'
+```
+
+Screenshot:
+
+![Error Handling](assets/error_fix.png)
+
+
 
 ## Real-World Use Case
 
-These command-line tasks simulate working as a DevOps engineer or system administrator managing:
+This project simulates real-world DevOps tasks:
 
-* Server-side file operations
-* Script storage and organization
-* Cloud server configuration (e.g., EC2 via SSH)
-* Automated job or CI/CD file handling
+* Accessing cloud-hosted Linux servers securely via SSH
+* Managing log files and system directories
+* Using `chmod` to secure configuration or secret files
+* Searching logs using `grep` in CI/CD workflows
+* Cleaning up or rotating files via batch commands
 
 ---
 
-## Project Directory Structure
+## Lessons Learned
+
+* Navigating the Linux filesystem is foundational for DevOps
+* SSH is a secure and essential tool for managing cloud servers
+* Permission errors can be solved using `sudo` and proper redirection
+* `grep` and `chmod` are indispensable in log parsing and system hardening
+* Command chaining and redirection must be properly scoped with `bash -c`
+
+---
+
+## Project Structure
 
 ```
 linux-commands-project/
 ├── README.md
 └── screenshots/
-    ├── login.png
+    ├── virtual_machine_connection.png
+    ├── connection2.png
     ├── pwd.png
-    ├── mkdir.png
-    ├── touch.png
-    ├── find.png
-    └── rm.png
+    ├── pwd_ls.png
+    ├── mkdir_devops-lab-to-linux-practice.png
+    ├── preview_with_cat.png
+    ├── sudo_rms.png
+    ├── find_name.png
+    ├── chmod_notes.png
+    ├── grep_notes.png
+    └── error_fix.png
 ```
----
-
-## 🧠 Lessons Learned
-
-* Navigating a Linux filesystem is foundational to DevOps and server administration
-* SSH enables secure access to remote Linux servers
-* Mastering simple commands like `ls`, `mkdir`, and `find` enhances productivity and automation skills
-* Proper documentation of terminal activity helps track changes and is useful for audits and collaboration
 
 ---
 
-## 🔗 Resources
+## References & Resources
 
 * [Linux Command Reference](https://linux.die.net/man/)
-* [AWS EC2 Guide](https://docs.aws.amazon.com/ec2/)
-* [Beginner’s Guide to the Terminal](https://ubuntu.com/tutorials/command-line-for-beginners)
-
+* [AWS EC2 Setup](https://docs.aws.amazon.com/ec2/)
+* [Grep Tutorial](https://www.geeksforgeeks.org/grep-command-in-unixlinux/)
+* [chmod Command Guide](https://linuxize.com/post/chmod-command/)
