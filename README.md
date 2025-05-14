@@ -1,161 +1,171 @@
-# Introduction to Linux – Capstone Project
+# Linux Commands & Filesystem Navigation – Hands-On DevOps Project
 
-## Overview
+## Project Overview
 
-This project is designed to provide a foundational understanding of **Linux**, one of the most widely used operating systems in the tech industry. Mastering Linux is essential for careers in:
-
-- DevOps
-- Cloud Computing
-- Software Development
-- Cybersecurity
-- Data Analysis/Science
-- AI/ML Engineering
-- QA/Testing
-
-Through this project, you will:
-
-- Understand what Linux is
-- Explore common Linux distributions
-- Create and access a cloud-based Linux server
-- Use `ssh` to connect to the server remotely
-- Perform basic software package management using `apt` or `yum`
+This project is focused on building a foundational understanding of Linux by practicing core shell commands used in real-world DevOps and system administration environments. The goal is to simulate everyday tasks that system administrators and DevOps engineers routinely perform, such as navigating directories, managing files, and locating system resources using native Linux command-line utilities.
 
 ---
 
-## What Is Linux?
+## Objectives
 
-**Linux** is a free, open-source operating system used for servers, supercomputers, mobile devices, and more. Unlike Windows or macOS, Linux is highly customizable and secure. It powers most of the internet's infrastructure and is supported by a global community of developers.
+The instructor outlined the following learning objectives for this project:
 
----
-
-## Linux Distributions (Distros)
-
-Linux distros are variations of the Linux OS built using the Linux kernel and bundled with system software and package managers. Here are some common ones:
-
-### Ubuntu
-- Best for beginners
-- Comes in desktop and server editions
-- Ideal for web hosting, development, and cloud deployment
-
-### CentOS
-- Enterprise-focused
-- Free version of Red Hat Enterprise Linux (RHEL)
-- Great for production server environments
-
-### Debian
-- Focuses on free and open-source software
-- Very stable and supports multiple hardware architectures
-
-### Fedora
-- Bleeding-edge distro with latest software
-- Often used as a testing ground for RHEL
+- Demonstrate core Linux commands for navigation, file/directory creation, and manipulation
+- Execute and document practical command-line tasks
+- Apply Linux concepts to real-world use cases (e.g., working with cloud-based servers)
+- Show understanding through output and screenshots of commands
 
 ---
 
-## Setting Up a Cloud-Based Linux Server
+## Environment Setup
 
-We use **AWS (Amazon Web Services)** to create and manage a Linux server using EC2 (Elastic Compute Cloud).
-
-### Steps:
-
-1. Sign up at [aws.amazon.com](https://aws.amazon.com)
-2. Go to the EC2 dashboard
-3. Click **Launch Instance**
-4. Select **Ubuntu Server 20.04 LTS (Free tier eligible)**
-5. Choose a **t2.micro** instance type
-6. Generate and download a **.pem** key file (e.g., `ubuntu.pem`)
-7. Launch the instance
-
-*Screenshot: AWS EC2 instance launched*
-![AWS EC2 instance launched](./assets/instance_launch1.png)
-![AWS EC2 instance launched](./assets/instance_launch2.png)]
+- **Operating System**: Ubuntu 20.04 LTS (via EC2 on AWS)
+- **Access Method**: SSH from macOS terminal
+- **Instance Type**: t2.micro (Free Tier)
 
 ---
 
-## Connecting to Your Server (Using SSH)
-
-### Requirements
-
-#### Windows
-- Use **MobaXterm** or **Git Bash**
-- (Alternative: PuTTY, PowerShell)
-
-#### macOS
-- Use the built-in **Terminal**
-
-### Steps
-
-1. Open your terminal
-2. Navigate to the directory with your PEM key:
+## SSH Access to Cloud Server
 
 ```bash
 cd ~/Downloads
+chmod 400 ubuntu.pem
+ssh -i ubuntu.pem ubuntu@<your-public-ip>
 ````
 
-3. Change permissions on the key:
-
-```bash
-chmod 400 key.pem
-```
-
-4. Extract the **public IP address** of your EC2 instance from the AWS dashboard
-5. Connect using SSH:
-
-```bash
-ssh -i ubuntu.pem ubuntu@<your-public-ip>
-```
-
-*Screenshot: Successful SSH login with `welcome to Ubuntu` banner*
+Screenshot: Successful login to EC2 instance showing welcome message and hostname
 ![Connection to Virtual Machine Instance](./assets/virtual_machine_connection.png)
+![Connection to Virtual Machine Instance](./assets/connection2.png)
 
 ---
 
-## Using Package Managers (apt/yum)
+## Filesystem Navigation & Management
 
-Package managers help you install, update, and remove software on Linux.
-
-### 🧪 Examples:
-
-#### Ubuntu/Debian (APT):
+### 1. Print Current Directory
 
 ```bash
-sudo apt update               # Refresh package list
-sudo apt install nginx        # Install NGINX web server
-sudo apt remove nginx         # Remove NGINX
+pwd
 ```
 
-#### CentOS/RHEL (YUM):
+Screenshot: Output of `pwd` showing `/home/ubuntu`
+![Confirming current directory](./assets/pwd.png)
+
+
+---
+
+### 2. List Files and Directories
 
 ```bash
-sudo yum update
-sudo yum install httpd
-sudo yum remove httpd
+ls -la
 ```
 
-*Screenshot: Installing NGINX or Apache with `apt` or `yum`*
-![Updates and Installations](./assets/update&installation1.png)
-![Updates and Installations](./assets/update&installation2.png)
-![Updates and Installations](./assets/update&installation3.png)
-![Updates and Installations](./assets/update&installation4.png)
-![Updates and Installations](./assets/update&installation5.png)
-![Updates and Installations](./assets/update&installation6.png)
+Screenshot: Output showing hidden files and details
+![Confirm List using -la flags](./assets/pwd_ls.png)
 
+---
 
+### 3. Create and Rename Directories
 
-## Final Project Structure
+```bash
+mkdir devops-lab
+mv devops-lab linux-practice
+```
+
+Screenshot: Confirmed creation and renaming using `ls`
+![Completing mkdir](assets/mkdir_devops-lab-to-linux-practice.png)
+
+---
+
+### 4. Create Files Inside Directories
+
+```bash
+cd linux-practice
+touch notes.txt summary.log
+echo "Linux is powerful." > notes.txt
+```
+
+Screenshot: Created files and content preview using `cat`
+![preview with cat](assets/preview_with_cat.png)
+---
+
+### 🗑️ 5. Delete Files and Folders
+
+```bash
+rm summary.log
+cd ..
+rm -r linux-practice
+```
+
+Screenshot: File and folder removal confirmation
+![Removal Evidences](assets/sudo_rms.png)
+---
+
+### 🔍 6. Find Files and Directories
+
+```bash
+find /home/ubuntu -name "notes.txt"
+```
+
+Screenshot: Output showing correct file path
+![Find notes.txt](assets/find_name.png)
+
+---
+
+## Summary of Commands Demonstrated
+
+| Command  | Purpose                          |
+| -------- | -------------------------------- |
+| `pwd`    | Print current directory          |
+| `ls -la` | List all files, including hidden |
+| `mkdir`  | Create directories               |
+| `mv`     | Rename or move files/directories |
+| `touch`  | Create empty files               |
+| `echo`   | Write text to files              |
+| `cat`    | View contents of files           |
+| `rm`     | Delete files                     |
+| `rm -r`  | Delete directories recursively   |
+| `find`   | Search for files/directories     |
+
+---
+
+## Real-World Use Case
+
+These command-line tasks simulate working as a DevOps engineer or system administrator managing:
+
+* Server-side file operations
+* Script storage and organization
+* Cloud server configuration (e.g., EC2 via SSH)
+* Automated job or CI/CD file handling
+
+---
+
+## Project Directory Structure
 
 ```
-intro-to-linux-project/
+linux-commands-project/
 ├── README.md
-├── screenshots/
-│   ├── aws-instance-setup.png
-│   ├── ssh-connection.png
-│   ├── apt-install-nginx.png
+└── screenshots/
+    ├── login.png
+    ├── pwd.png
+    ├── mkdir.png
+    ├── touch.png
+    ├── find.png
+    └── rm.png
 ```
+---
+
+## 🧠 Lessons Learned
+
+* Navigating a Linux filesystem is foundational to DevOps and server administration
+* SSH enables secure access to remote Linux servers
+* Mastering simple commands like `ls`, `mkdir`, and `find` enhances productivity and automation skills
+* Proper documentation of terminal activity helps track changes and is useful for audits and collaboration
 
 ---
 
-## Conclusion
+## 🔗 Resources
 
-This project covered the foundational elements of Linux, including understanding different distributions, setting up a cloud-based server, connecting securely via SSH, and managing packages using `apt` and `yum`. These concepts are vital stepping stones for any modern technology career.
+* [Linux Command Reference](https://linux.die.net/man/)
+* [AWS EC2 Guide](https://docs.aws.amazon.com/ec2/)
+* [Beginner’s Guide to the Terminal](https://ubuntu.com/tutorials/command-line-for-beginners)
 
